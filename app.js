@@ -13,15 +13,12 @@ app.use(express.static('public'))
 
 // Request when the page is loaded
 app.get('/', (req, res) => {
-
     let day = date.getDate();
      
     res.render('list', {listTitle: day, newListItem: items})
 });
 
-
 app.post('/', (req, res) => {
-
     let item = req.body.newItem
     if (req.body.list === 'Work') {
         workItems.push(item)
