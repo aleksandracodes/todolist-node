@@ -9,6 +9,7 @@ let items = ['Buy food', 'Cook food', 'Eat food'];
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));  // required in app.post method
+app.use(express.static('public'))
 
 // Request when the page is loaded
 app.get('/', (req, res) => {
