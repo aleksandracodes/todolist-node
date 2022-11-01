@@ -5,9 +5,12 @@ const bodyParser = require('body-parser')
 
 const app = express();
 
+let items = ['Buy food', 'Cook food', 'Eat food'];
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));  // required in app.post method
 
+// Request when the page is loaded
 app.get('/', (req, res) => {
 
     let today = new Date();
@@ -20,12 +23,15 @@ app.get('/', (req, res) => {
 
     let day = today.toLocaleDateString('en-US', options);
      
-    res.render('list', {kindOfDay: day})
+    res.render('list', {kindOfDay: day, newListItem: items})
 });
 
 app.post('/', (req, res) => {
     let item = req.body.newItem
-    console.log(item)
+
+    items.push(item);
+
+    res.redirect('/');
 });
 
 app.listen(3000, () => {
