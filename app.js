@@ -14,7 +14,7 @@ app.use(express.static('public'))
 // Request when the page is loaded
 app.get('/', (req, res) => {
 
-    let day = date()
+    let day = date.getDate();
      
     res.render('list', {listTitle: day, newListItem: items})
 });
