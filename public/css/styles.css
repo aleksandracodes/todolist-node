@@ -61,7 +61,7 @@ p {
   color: var(--gray);
 }
 
-form {
+form.item {
   text-align: center;
   margin-left: 20px;
 }
