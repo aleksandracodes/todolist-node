@@ -5,7 +5,8 @@ const _ = require('lodash')
 
 const app = express();
 
-require("dotenv").config(); 
+require("dotenv").config();
+
 const srvr = process.env.APP_KEY; 
 const srvrCred = process.env.APP_SECRET; 
 
@@ -147,5 +148,5 @@ app.post('/delete', (req, res) => {
 
 
 app.listen(process.env.PORT || 3000, function () { 
-    console.log("Server started.");
+    console.log("Server has started successfully.");
 }); 

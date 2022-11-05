@@ -1,5 +1,7 @@
-# Js node_modules
-node_modules
+# JS node_modules
+/node_modules
+npm-debug.log
+.DS_Store
 
 # confidential keys
-.env
+/*.env
