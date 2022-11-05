@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const _ = require('lodash')
 
 const app = express();
 
@@ -72,7 +73,7 @@ app.get('/', (req, res) => {
 
 // CREATE CUSTOM TO-DO LIST USING ROUTE PARAMETER
 app.get("/:customListName", function(req, res) {
-    const customListName = req.params.customListName;
+    const customListName = _.capitalize(req.params.customListName);
    
     List.findOne({name: customListName}, function(err, foundList) {
       if(!err){
@@ -121,14 +122,24 @@ app.post('/', (req, res) => {
 app.post('/delete', (req, res) => {
     const checkedItemId = req.body.checkbox;
 
-    // <ModelName>.findByIdAndRemove(<id>, function(err){...})
-    Item.findByIdAndRemove(checkedItemId, function(err){
-        if (!err) {
-            console.log('Successfully deleted the item');
-            res.redirect('/');
-        }
-    })
-})
+    const listName = req.body.listName;
+
+    if(listName === 'Today') {
+        // <ModelName>.findByIdAndRemove(<id>, function(err){...})
+        Item.findByIdAndRemove(checkedItemId, function(err){
+            if (!err) {
+                console.log('Successfully deleted the item');
+                res.redirect('/');
+            }
+        })
+    } else {
+        List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, function(err, foundList) {
+            if (!err) {
+                res.redirect('/' + listName);
+            };
+        });
+    };
+});
 
 
 app.listen(3000, () => {
