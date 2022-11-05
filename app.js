@@ -5,12 +5,16 @@ const _ = require('lodash')
 
 const app = express();
 
+require("dotenv").config(); 
+const srvr = process.env.APP_KEY; 
+const srvrCred = process.env.APP_SECRET; 
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true })); // required in app.post method
 app.use(express.static('public'))
 
 
-mongoose.connect('mongodb://localhost/todolistDB',{
+mongoose.connect("mongodb+srv://" + srvr + ":" + srvrCred + "@cluster0.mqlswwm.mongodb.net/todolistDB",{
     useNewUrlParser: true, 
     useUnifiedTopology: true,
     family: 4,
@@ -142,6 +146,6 @@ app.post('/delete', (req, res) => {
 });
 
 
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
-});
+app.listen(process.env.PORT || 3000, function () { 
+    console.log("Server started.");
+}); 
