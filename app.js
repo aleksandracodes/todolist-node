@@ -34,7 +34,7 @@ const item2 = new Item({
 })
 
 const item3 = new Item({
-    name: '<-- Hit this to delete an item.'
+    name: '<-- Hit this to delete an item'
 })
 
 // Add a New Schemas To Array
