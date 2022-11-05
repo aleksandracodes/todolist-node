@@ -99,14 +99,23 @@ app.get("/:customListName", function(req, res) {
 
 app.post('/', (req, res) => {
     const itemName = req.body.newItem;
+    const listName = req.body.list;  // corresponds to the name of the submit button
     
     // create a new item document based on MongdoDB model
     const item = new Item({
         name: itemName
     });
 
-    item.save();
-    res.redirect('/');
+    if (listName === 'Today') {
+        item.save();
+        res.redirect('/');
+    } else {
+        List.findOne({name: listName}, function(err, foundList){
+            foundList.items.push(item)  // embedded array of item (ListSchema)
+            foundList.save();
+            res.redirect('/' + listName);
+        })
+    }
 });
 
 app.post('/delete', (req, res) => {
